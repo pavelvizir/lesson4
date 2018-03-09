@@ -14,14 +14,13 @@ import requests
 from mos_api_key import mos_api_key
 
 
-def get_names(print_result=None):
+def get_names(url, print_result=None):
     ''' Загружает и возвращает имена. '''
     requests_params = {'api_key': mos_api_key}
-    requests_url = 'https://apidata.mos.ru/v1/datasets/2009/rows'
     requests_timeout = (5, 30)
     try:
         names = requests.get(
-            requests_url,
+            url,
             timeout=requests_timeout,
             params=requests_params)
         names.raise_for_status()
@@ -36,9 +35,14 @@ def get_names(print_result=None):
 
     if not print_result == 'print_result':
         return names_json
-    return 'Succesfully loaded names from {}.\nLength: {} lines.\nLines look\
-    like this:\n{}'.format(requests_url, len(names_json), names_json[0])
+    return '\nSuccesfully loaded names from {}.\nLength: {} lines.\nLines look\
+ like this:\n{}'.format(url, len(names_json), names_json[0])
 
 
 if __name__ == '__main__':
-    print(get_names('print_result'))
+    print('\nЖенские имена',
+          get_names('https://apidata.mos.ru/v1/datasets/2009/rows',
+                    'print_result'))
+    print('\nМужские имена',
+          get_names('https://apidata.mos.ru/v1/datasets/2011/rows',
+                    'print_result'))
