@@ -61,6 +61,8 @@ def show_names():
             return '<b>Год следует указывать числом!</b>'
     else:
         year = None
+    # Список вместо строки чтобы объединить с '\n'.join. Так source страницы
+    # симпатичнее :-)
     result = ['<table>']
     if year:
         result.append('<caption><b>За ' + str(year) + ' год:</b></caption>')
