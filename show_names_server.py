@@ -39,18 +39,18 @@ def show_names():
 
     global names
     global names_timestamp
+    global available_years
     current_time = time()
     if not names or current_time - names_timestamp > cache_timeout:
         print('Downloading data.')
         names = get_names('https://apidata.mos.ru/v1/datasets/2009/rows')
         names_timestamp = time()
+        available_years.clear()
+        for row in names:
+            if row['Cells']['Year'] not in available_years:
+                available_years.append(row['Cells']['Year'])
     else:
         print('Using cached data.')
-    available_years = []
-    for row in names:
-        if row['Cells']['Year'] not in available_years:
-            available_years.append(row['Cells']['Year'])
-
     year_arg = request.args.get('year')
     if year_arg:
         try:
@@ -96,4 +96,5 @@ if __name__ == '__main__':
     cache_timeout = 300
     names = []
     names_timestamp = time()
+    available_years = []
     app.run()
