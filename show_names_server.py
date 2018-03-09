@@ -30,7 +30,13 @@ app = Flask(__name__)
 
 @app.route('/names')
 def show_names():
-    ''' Выводит в табличном виде данные об именах. '''
+    ''' Выводит в табличном виде данные об именах при обращении по URL
+        "https://server_address/names".
+        Принимает аргумент "year".
+        Обращается за данными реже 300 секунд, остальное время пользуется
+        кэшем.
+    '''
+
     global names
     global names_timestamp
     current_time = time()
