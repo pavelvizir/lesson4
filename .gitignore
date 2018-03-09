@@ -1,0 +1,6 @@
+.venv
+*.swp
+bot_token.py
+bot.log
+*.pyc
+mos_api_key.py
